@@ -77,7 +77,24 @@ fn main() -> Result<(), Box<dyn Error>> {
         print_version_info();
         return Ok(());
     } else {
-        let crawler: FileSystemCrawler = FileSystemCrawler::new(directory, logging);
+        let crawler: FileSystemCrawler = FileSystemCrawler::new(
+            match directory {
+                emp if emp.is_empty() => match std::env::current_dir() {
+                    Ok(cwd) => match cwd.into_os_string().into_string() {
+                        Ok(cwd) => cwd,
+                        Err(_) => {
+                            return Err(Box::new(std::io::Error::new(
+                                std::io::ErrorKind::NotFound,
+                                "FATAL: Unable to determine current working directory...",
+                            )))
+                        }
+                    },
+                    Err(e) => return Err(Box::new(e)),
+                },
+                dir => dir,
+            },
+            logging,
+        );
         crawler.crawl_and_kill();
     }
 
