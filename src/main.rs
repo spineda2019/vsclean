@@ -19,6 +19,9 @@
 use std::error::Error;
 
 use argparse::{ArgumentParser, Store, StoreTrue};
+use file_system_crawler::FileSystemCrawler;
+
+mod file_system_crawler;
 
 fn print_version_info() {
     const COPYRIGHT_NOTICE: &str =
@@ -73,6 +76,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     if print_version {
         print_version_info();
         return Ok(());
+    } else {
+        let crawler: FileSystemCrawler = FileSystemCrawler::new(directory, logging);
+        crawler.crawl_and_kill();
     }
 
     Ok(())
