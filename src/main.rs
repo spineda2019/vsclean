@@ -36,7 +36,7 @@ program has absolutely no warranty.";
 ";
 
     println!("{}", COOL_NAME_ART);
-    println!("Trace version {}\n", VERSION);
+    println!("vsclean version {}\n", VERSION);
     println!("{}\n", COPYRIGHT_NOTICE);
 }
 
