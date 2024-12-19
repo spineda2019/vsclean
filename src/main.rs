@@ -77,7 +77,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         print_version_info();
         return Ok(());
     } else {
-        let crawler: FileSystemCrawler = FileSystemCrawler::new(
+        let mut crawler: FileSystemCrawler = FileSystemCrawler::new(
             match directory {
                 emp if emp.is_empty() => match std::env::current_dir() {
                     Ok(cwd) => match cwd.into_os_string().into_string() {
